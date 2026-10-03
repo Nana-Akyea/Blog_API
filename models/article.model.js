@@ -1,0 +1,32 @@
+const mongoose = require('mongoose');
+
+const articleSchema = new mongoose.Schema({
+  title: {
+    type: String,
+    required: true,
+    minlength: 5
+  },
+  content: {
+    type: String,
+    required: true,
+    minlength: 20
+  },
+  author: {
+    type: String,
+    default: "Guest"
+  },
+  tags: [String]
+});
+
+// Create a text index for searching
+articleSchema.index({
+  title: 'text',
+  content: 'text',
+  tags: 'text'
+});
+
+articleSchema.set('timestamps', true);
+
+const Article = mongoose.model("Article", articleSchema);
+
+module.exports = Article;
